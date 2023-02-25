@@ -1,0 +1,51 @@
+<!-- This is an HTML file that contains the layout and structure of the web page. -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- The head section contains metadata and external links to CSS and JavaScript files. -->
+  <meta charset="UTF-8">
+  <title>Flight Tracker</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/img/icons8-plane-24.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./src/styles.scss">
+</head>
+
+<body>
+  <!-- The body section contains the content of the web page. -->
+  <div id="container">
+    <div class="heading">
+      <div class="logo"></div>
+      <div class="flight-tracker">
+        <p class="flight-heading">FLIGHT TRACKER</p>
+      </div>
+    </div>
+    <div class="flight-content">
+      <div class="active-flights">
+        <div class="active-flights-heading">
+          <h1>Current flights going overhead :)</h1>
+        </div>
+        <div class="flights">
+          <div class="flight-headings">
+            <span>Flight Call Sign</span>
+            <span class="media full-screen">Vertical Speed</span>
+            <span>Direction</span>
+            <span class="media medium-screen-size">Direction</span>
+            <span>Heading</span>
+            <span class="media large-screen-size">Altitude</span>
+            <span>Track Flight</span>
+          </div>
+          <div id="flights-info"></div>
+        </div>
+      </div>
+      <div class="flight-map">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+  <!-- External JavaScript files are loaded at the end of the body section to optimize page load time. -->
+  <script type="module" src="./src/main.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+</body>
+
+</html>
