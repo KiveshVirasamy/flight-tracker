@@ -26,10 +26,10 @@ export function addFlightInfoToContainer(flight: Flight): void {
   if (!flightInfo) return;
 
   // Convert the speed from m/s to km/h using utility function
-  const speed = Utils.convertMPSToKPH(flight[11] ?? 0.0);
+  const speed: number = Utils.convertMPSToKPH(flight[11] ?? 0.0);
 
   // Calculate the direction
-  const direction = Utils.calculateTheHeadingDirection(flight[10] ?? "none");
+  const direction: number = Utils.calculateTheHeadingDirection(flight[10] ?? "none");
 
   // Create HTML for a single flight and insert it into the container
   const flightHtml = `
@@ -54,7 +54,7 @@ export function addEventListenerToFlightButtons(flights: Flight[]): void {
   const viewButtons = document.querySelectorAll(".track-button");
 
   // For each button, find the related flight info and add a click event listener
-  viewButtons.forEach((button) => {
+  viewButtons.forEach((button: Element) => {
     const relatedInfo = flights.find((flight) => flight[1] === button.id);
     button.addEventListener("click", () =>
       toggleFlightFocus(button, relatedInfo)
