@@ -21,11 +21,15 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 const marker = L.marker([-35, 25], { icon: planeIcon }).addTo(map);
 
 // Define functions to reset the map view and set the map and marker to a given location
-export function resetMapLocationView() {
+export function resetMapLocationView(): void {
   map.flyTo([-35, 23], 2);
 }
 
-export function setMapAndMarkerToCurrentFlightLocation(lat, lon, heading) {
+export function setMapAndMarkerToCurrentFlightLocation(
+  lat: number,
+  lon: number,
+  heading: number
+): void {
   map.flyTo([lat, lon], 10);
   marker.setLatLng([lat, lon]);
   planeIcon.options.rotationAngle = heading - 90;
