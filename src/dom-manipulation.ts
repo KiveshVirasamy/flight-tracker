@@ -21,10 +21,10 @@ type Flight = [
 // Higher-order function that returns a function to create HTML for a single flight
 function createFlightHtml(flight: Flight): () => string {
   // Convert the speed from m/s to km/h using utility function
-  const speed = Utils.convertMPSToKPH(flight[11] ?? 0.0);
+  const speed: number = Utils.convertMPSToKPH(flight[11] ?? 0.0);
 
   // Calculate the direction
-  const direction = Utils.calculateTheHeadingDirection(flight[10] ?? "none");
+  const direction: number = Utils.calculateTheHeadingDirection(flight[10] ?? "none");
 
   return () => `
     <div class="single-flight">
@@ -40,6 +40,7 @@ function createFlightHtml(flight: Flight): () => string {
       </button>
     </div>`;
 }
+
 
 // Higher-order function that returns a function to toggle the focus on a flight
 function toggleFlightFocus(fltInfo: Flight): (button: HTMLButtonElement) => void {

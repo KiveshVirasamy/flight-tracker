@@ -1,68 +1,62 @@
-// Importing the necessary functions from separate files.
-import { Observable } from "rxjs";
+import { concatMap, Observable } from "rxjs";
 import {
   addEventListenerToFlightButtons,
   addFlightInfoToContainer
 } from "./dom-manipulation";
-import { getFlightInfo } from "./services/flights-services.js";
 
-// Interface for Flight data from API.
+import { getFlightInfo } from "./services/flights-services";
+
 interface FlightData {
   states: Array<any>;
 }
 
-// Observable to fetch flight data from API.
-const flightData$: Observable<FlightData> = Observable.create(async (observer) => {
+const flightData$: Observable<FlightData> = Observable.create(async (observer: any) => {
   try {
-    // Check if flight data exists in session storage
     const storedData = sessionStorage.getItem('flightData');
     if (storedData) {
       const flightData: FlightData = JSON.parse(storedData);
       observer.next(flightData);
+      observer.complete();
     } else {
       const response = await getFlightInfo();
       const flightData: FlightData = await response.json();
-      // Store flight data in session storage
       sessionStorage.setItem('flightData', JSON.stringify(flightData));
       observer.next(flightData);
+      observer.complete();
     }
-    observer.complete();
   } catch (error) {
     observer.error(error);
   }
 });
 
-// Observable to add flight information to the container in the DOM.
-const addFlightInfo$: Observable<any> = Observable.create((observer) => {
-  flightData$.subscribe((flightData) => {
+const addFlightInfo$: Observable<void> = flightData$.pipe(
+  concatMap((flightData: FlightData) => {
     flightData.states.forEach((flight) => {
       addFlightInfoToContainer(flight);
     });
-    observer.next();
-    observer.complete();
-  }, (error) => {
-    observer.error(error);
-  });
-});
+    return new Observable((observer) => {
+      observer.next();
+      observer.complete();
+    });
+  })
+);
 
-// Observable to add event listener to the track flight button.
-const addEventListener$: Observable<any> = Observable.create((observer) => {
-  flightData$.subscribe((flightData) => {
+const addEventListener$: Observable<void> = flightData$.pipe(
+  concatMap((flightData: FlightData) => {
     addEventListenerToFlightButtons(flightData.states);
-    observer.next();
-    observer.complete();
-  }, (error) => {
-    observer.error(error);
-  });
-});
+    return new Observable((observer) => {
+      observer.next();
+      observer.complete();
+    });
+  })
+);
 
-// Subscription to call the observables and catch errors.
 const subscription = addFlightInfo$.subscribe(() => {
   addEventListener$.subscribe(() => {
     subscription.unsubscribe();
-  }, (error) => {
+  }, (error: any) => {
     console.error(error);
   });
-}, (error) => {
+}, (error: any) => {
   console.error(error);
 });
