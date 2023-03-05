@@ -3,6 +3,7 @@ import {
   addEventListenerToFlightButtons,
   addFlightInfoToContainer
 } from "./dom-manipulation";
+
 import { getFlightInfo } from "./services/flights-services";
 
 interface FlightData {
