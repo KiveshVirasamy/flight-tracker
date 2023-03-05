@@ -10,9 +10,8 @@ html {
     margin: 0;
     height: 100vh;
     width: 100vw;
-
     background-size: cover;
-    color: $font-color;
+    // color: $font-color;
     font-family: Arial, Helvetica, sans-serif;
   }
 }
@@ -162,11 +161,11 @@ html {
 }
 
 .plane-icon {
-  height: 24px;
-  width: 24px;
+  height: 2rem;
+  width: 2rem;
   div {
-    height: 24px;
-    width: 24px;
+    height: 2rem;
+    width: 2rem;
   }
 }
 

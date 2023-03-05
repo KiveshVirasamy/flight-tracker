@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import {
   addEventListenerToFlightButtons,
   addFlightInfoToContainer
-} from "./dom-manipulation.ts";
+} from "./dom-manipulation";
 import { getFlightInfo } from "./services/flights-services.js";
 
 // Interface for Flight data from API.
