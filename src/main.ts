@@ -30,7 +30,7 @@ const flightData$: Observable<FlightData> = Observable.create(async (observer: a
 
 const addFlightInfo$: Observable<void> = flightData$.pipe(
   concatMap((flightData: FlightData) => {
-    flightData.states.forEach((flight: any) => {
+    flightData.states.forEach((flight) => {
       addFlightInfoToContainer(flight);
     });
     return new Observable((observer) => {
