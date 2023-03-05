@@ -1,0 +1,194 @@
+$secondary-color: rgb(0, 0, 0);
+$primary-color: #000000;
+$screen-color: #000000;
+$border-color: rgba(255, 255, 0, 0.327);
+$font-color: #ffff00;
+html {
+  @apply bg-[$secondary-color];
+}
+html body {
+  @apply h-screen w-screen bg-cover m-0; // color: $font-color;font-family: Arial, Helvetica, sans-serif;
+}
+#container {
+  @apply flex flex-col h-full content-start;
+}
+#container .heading {
+  @apply h-fit flex bg-[$primary-color];
+}
+#container .heading .flight-track {
+  @apply grid grid-cols-[3rem_4rem_3.5rem_0] grid-rows-[repeat(3,auto)] gap-0;
+}
+#container .heading .flight-track * {
+  @apply text-[2.5rem] font-semibold m-0;
+}
+#container .heading .flight-track .flight-heading {
+  @apply self-end col-[1_/_5];
+}
+#container .heading .flight-track .track-heading {
+  @apply row-start-2 col-[2/5];
+}
+#container .flight-content {
+  @apply flex flex-col w-full h-full justify-evenly;
+}
+#container .flight-content .active-flights {
+  @apply h-fit flex flex-col justify-center p-4;
+}
+#container .flight-content .active-flights .active-flights-heading {
+  @apply flex;
+}
+#container .flight-content .active-flights .active-flights-heading span {
+  @apply text-[0.8rem] self-end pl-1 pb-1;
+}
+#container
+  .flight-content
+  .active-flights
+  .active-flights-heading
+  .flight-location {
+  @apply m-auto;
+}
+#container .flight-content .active-flights h1 {
+  @apply self-start font-thin m-0;
+}
+#container .flight-content .active-flights .flights {
+  @apply flex flex-col justify-evenly pt-4;
+}
+#container .flight-content .active-flights .flights > * {
+  @apply grid;
+}
+#container .flight-content .active-flights .flights .flight-headings {
+  @apply grid-cols-[repeat(4,1fr)] font-thin text-[0.8rem] font-medium pb-1;
+}
+#container .flight-content .active-flights .flights .flight-headings .media {
+  @apply hidden;
+}
+#container .flight-content .active-flights .flights #flights-info {
+  @apply border-[$border-color] mr-[-0.5rem] ml-[-0.5rem] text-[$font-color] bg-[$screen-color] uppercase my-0 rounded-lg border-8 border-solid;
+  font-family: monospace;
+}
+#container .flight-content .active-flights .flights #flights-info * {
+  @apply text-[$font-color] bg-[$screen-color] uppercase;
+  font-family: monospace;
+}
+#container
+  .flight-content
+  .active-flights
+  .flights
+  #flights-info
+  .single-flight {
+  @apply grid grid-cols-[repeat(4,1fr)] px-0 py-0.5;
+}
+#container
+  .flight-content
+  .active-flights
+  .flights
+  #flights-info
+  .single-flight
+  .media {
+  @apply hidden;
+}
+#container
+  .flight-content
+  .active-flights
+  .flights
+  #flights-info
+  .single-flight
+  button {
+  @apply text-start font-[bold] cursor-pointer p-0 border-[none];
+}
+#container .flight-content .active-flights .flights #flights-info .hidden {
+  @apply hidden;
+}
+#container .flight-content #map {
+  @apply invisible w-full h-full;
+}
+#container .flight-content .flight-map {
+  @apply h-full grow pt-0 pb-4 px-4;
+}
+.plane-icon {
+  @apply h-8 w-8;
+}
+.plane-icon div {
+  @apply h-8 w-8;
+}
+@media screen and (min-width: 480px) {
+  #container .heading .flight-track {
+    @apply grow mr-20;
+  }
+  #container .content {
+    @apply text-[1.1rem];
+  }
+  #container .content .active-flights .flights .flight-headings {
+    @apply grid-cols-[repeat(5,1fr)];
+  }
+  #container
+    .content
+    .active-flights
+    .flights
+    .flight-headings
+    .medium-screen-size {
+    @apply contents;
+  }
+  #container .content .active-flights .flights #flights-info .single-flight {
+    @apply text-[0.9rem] grid-cols-[repeat(5,1fr)];
+  }
+  #container
+    .content
+    .active-flights
+    .flights
+    #flights-info
+    .single-flight
+    .medium-screen-size {
+    @apply contents;
+  }
+}
+@media screen and (min-width: 769px) {
+  #container .content {
+    @apply text-[1.2rem];
+  }
+  #container .content .active-flights .flights .flight-headings {
+    @apply text-[0.9rem] grid-cols-[repeat(6,1fr)];
+  }
+  #container
+    .content
+    .active-flights
+    .flights
+    .flight-headings
+    .large-screen-size {
+    @apply contents;
+  }
+  #container .content .active-flights .flights #flights-info .single-flight {
+    @apply text-base grid-cols-[repeat(6,1fr)];
+  }
+  #container
+    .content
+    .active-flights
+    .flights
+    #flights-info
+    .single-flight
+    .large-screen-size {
+    @apply contents;
+  }
+}
+@media screen and (min-width: 1024px) {
+  #container .content {
+    @apply text-[1.2rem];
+  }
+  #container .content .active-flights .flights .flight-headings {
+    @apply grid-cols-[repeat(7,1fr)] text-[0.9rem];
+  }
+  #container .content .active-flights .flights .flight-headings .full-screen {
+    @apply contents;
+  }
+  #container .content .active-flights .flights #flights-info .single-flight {
+    @apply grid-cols-[repeat(7,1fr)] text-base;
+  }
+  #container
+    .content
+    .active-flights
+    .flights
+    #flights-info
+    .single-flight
+    .full-screen {
+    @apply contents;
+  }
+}

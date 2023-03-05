@@ -1,6 +1,6 @@
 <!-- This is an HTML file that contains the layout and structure of the web page. -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <!-- The head section contains metadata and external links to CSS and JavaScript files. -->
@@ -8,38 +8,42 @@
   <title>Flight Tracker</title>
   <link rel="icon" type="image/svg+xml" href="./assets/img/icons8-plane-24.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./src/styles.scss">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="/src/styles.css">
+  <link rel="stylesheet" href="/src/styles.scss">
+
 </head>
 
-<body>
+<body class="bg-gray-900 text-yellow-400">
   <!-- The body section contains the content of the web page. -->
-  <div id="container">
-    <div class="heading">
+  <div id="container" class="flex flex-col h-full items-start">
+    <div class="heading bg-black">
       <div class="logo"></div>
       <div class="flight-tracker">
-        <p class="flight-heading">FLIGHT TRACKER</p>
+        <p class="flight-heading text-2xl font-bold" aria-label="Flight Tracker">FLIGHT TRACKER</p>
       </div>
     </div>
-    <div class="flight-content">
-      <div class="active-flights">
-        <div class="active-flights-heading">
-          <h1>Current flights going overhead :)</h1>
+    <div class="flight-content flex flex-col w-full h-full justify-between">
+      <div class="active-flights flex flex-col justify-center p-4">
+        <div class="active-flights-heading flex">
+          <h1 class="text-lg font-bold" aria-label="Current flights going overhead">Current flights going overhead :)
+          </h1>
         </div>
-        <div class="flights">
-          <div class="flight-headings">
-            <span>Flight Call Sign</span>
-            <span class="media full-screen">Vertical Speed</span>
-            <span>Direction</span>
-            <span class="media medium-screen-size">Direction</span>
-            <span>Heading</span>
-            <span class="media large-screen-size">Altitude</span>
-            <span>Track Flight</span>
+        <div class="flights flex flex-col space-y-2">
+          <div class="flight-headings grid grid-cols-4 gap-2 font-bold text-sm pb-2">
+            <span aria-label="Flight Call Sign">Flight Call Sign</span>
+            <span class="media full-screen" aria-label="Vertical Speed">Vertical Speed</span>
+            <span aria-label="Direction">Direction</span>
+            <span class="media medium-screen-size" aria-label="Direction">Direction</span>
+            <span aria-label="Heading">Heading</span>
+            <span class="media large-screen-size" aria-label="Altitude">Altitude</span>
+            <span aria-label="Track Flight">Track Flight</span>
           </div>
-          <div id="flights-info"></div>
+          <div id="flights-info" class="border-2 border-yellow-400 rounded-lg text-yellow-400 p-2"></div>
         </div>
       </div>
       <div class="flight-map">
-        <div id="map"></div>
+        <div id="map" aria-label="Map"></div>
       </div>
     </div>
   </div>
