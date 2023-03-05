@@ -18,21 +18,15 @@ type Flight = [
   number
 ];
 
-// Function to add flight info to the container
-export function addFlightInfoToContainer(flight: Flight): void {
-  // Get the flights-info container
-  const flightInfo = document.getElementById("flights-info");
-  // If container is not found, return
-  if (!flightInfo) return;
-
+// Higher-order function that returns a function to create HTML for a single flight
+function createFlightHtml(flight: Flight): () => string {
   // Convert the speed from m/s to km/h using utility function
   const speed = Utils.convertMPSToKPH(flight[11] ?? 0.0);
 
   // Calculate the direction
   const direction = Utils.calculateTheHeadingDirection(flight[10] ?? "none");
 
-  // Create HTML for a single flight and insert it into the container
-  const flightHtml = `
+  return () => `
     <div class="single-flight">
       <span>${flight[1] || "None"}</span>
       <span class="media full-screen">${speed}km/h</span>
@@ -45,56 +39,64 @@ export function addFlightInfoToContainer(flight: Flight): void {
         Where is it?
       </button>
     </div>`;
-  flightInfo.insertAdjacentHTML("beforeend", flightHtml);
+}
+
+// Higher-order function that returns a function to toggle the focus on a flight
+function toggleFlightFocus(fltInfo: Flight): (button: HTMLButtonElement) => void {
+  return (button: HTMLButtonElement) => {
+    const mapElements = document.getElementById("map");
+
+    // If button says CLOSE, hide the map and reset the view
+    if (button.innerText === "CLOSE") {
+      mapElements!.style.visibility = "hidden";
+      button.innerText = "Where is it?";
+      LeafletServices.resetMapLocationView();
+    } else {
+      // Otherwise, show the map and set the marker to the flight location
+      mapElements!.style.visibility = "visible";
+      button.innerText = "close";
+      LeafletServices.setMapAndMarkerToCurrentFlightLocation(
+        fltInfo[6],
+        fltInfo[5],
+        fltInfo[10]
+      );
+    }
+
+    // Show and hide buttons based on the button text
+    showAndHideButtonsAfterClick(button.innerText);
+  };
+}
+
+// Function to add flight info to the container
+export function addFlightInfoToContainer(flight: Flight): void {
+  // Get the flights-info container
+  const flightInfo = document.getElementById("flights-info");
+  // If container is not found, return
+  if (!flightInfo) return;
+
+  const createHtml = createFlightHtml(flight);
+
+  // Create HTML for a single flight and insert it into the container
+  flightInfo.insertAdjacentHTML("beforeend", createHtml());
+}
+
+// Higher-order function that returns a function to add event listeners to flight tracking buttons
+function addEventListenerToFlightButton(flight: Flight): () => void {
+  return () => {
+    // Get the track button for this flight
+    const button = document.getElementById(flight[1]) as HTMLButtonElement | null;
+
+    // If the button does not exist, return
+    if (!button) return;
+
+    const toggleFocus = toggleFlightFocus(flight);
+
+    button.addEventListener("click", () => toggleFocus(button));
+  };
 }
 
 // Function to add event listeners to flight tracking buttons
 export function addEventListenerToFlightButtons(flights: Flight[]): void {
-  // Get all the track buttons
-  const viewButtons = document.querySelectorAll(".track-button");
-
-  // For each button, find the related flight info and add a click event listener
-  viewButtons.forEach((button) => {
-    const relatedInfo = flights.find((flight) => flight[1] === button.id);
-    button.addEventListener("click", () =>
-      toggleFlightFocus(button, relatedInfo)
-    );
-  });
+  flights.map(addEventListenerToFlightButton).forEach((addListener) => addListener());
 }
 
-// Function to toggle the focus on a flight
-function toggleFlightFocus(button: HTMLButtonElement, fltInfo: Flight): void {
-  const mapElements = document.getElementById("map");
-
-  // If button says CLOSE, hide the map and reset the view
-  if (button.innerText === "CLOSE") {
-    mapElements!.style.visibility = "hidden";
-    button.innerText = "Where is it?";
-    LeafletServices.resetMapLocationView();
-  } else {
-    // Otherwise, show the map and set the marker to the flight location
-    mapElements!.style.visibility = "visible";
-    button.innerText = "close";
-    LeafletServices.setMapAndMarkerToCurrentFlightLocation(
-      fltInfo[6],
-      fltInfo[5],
-      fltInfo[10]
-    );
-  }
-
-  // Show and hide buttons based on the button text
-  showAndHideButtonsAfterClick(button.innerText);
-}
-
-// Function to show and hide buttons based on the button text
-function showAndHideButtonsAfterClick(innerText: string): void {
-  const buttons = document.querySelectorAll(".track-button");
-
-  // For each button, toggle the hidden class based on the button text
-  buttons.forEach((button) => {
-    button.parentNode?.classList.toggle(
-      "hidden",
-      button.innerText !== innerText
-    );
-  });
-}
